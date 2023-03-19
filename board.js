@@ -32,11 +32,18 @@ function draw() {
     theta += (2 * Math.PI) / 10;
   }
 
-  ctx.globalAlpha = 0.2;
+  // fill center circle
+  ctx.beginPath();
+  ctx.arc(250, 250, 20, 0, Math.PI * 2, true);
+  ctx.fill();
+  ctx.stroke();
 
+  // label board sections
+  ctx.globalAlpha = 0.2;
   ctx.font = "70px Arial";
   ctx.fillStyle = "white";
 
+  // one's digits
   ctx.fillText("1", 275, 140);
   ctx.fillText("2", 340, 190);
   ctx.fillText("3", 370, 275);
@@ -47,6 +54,21 @@ function draw() {
   ctx.fillText("8", 90, 275);
   ctx.fillText("9", 120, 190);
   ctx.fillText("0", 190, 140);
+
+  // label board rings
+  ctx.globalAlpha = 0.8;
+  ctx.font = "10px Arial";
+  ctx.fillStyle = "silver";
+
+  // ten's digits
+  for(let t = 1; t <= 10; t++) {
+    ctx.beginPath();
+    ctx.fillText(100 - 10*t, 250 + 14.5*t, 250 - 14.5*t);
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  ctx.fillText(100, 242, 252);
+  ctx.stroke();
 
 
 }

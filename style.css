@@ -22,3 +22,9 @@ body {
   position: absolute;
   z-index: 1;
 }
+
+.start-btn {
+  color: white;
+  background-color: black;
+  margin: 20px;
+}
