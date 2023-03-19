@@ -4,6 +4,11 @@ function draw() {
   const ctx = canvas.getContext("2d");
   ctx.strokeStyle = "#FFFFFF"
 
+
+  /**
+   * Board Creation
+   */
+
   const R = 220;
 
   // rings
@@ -44,16 +49,16 @@ function draw() {
   ctx.fillStyle = "white";
 
   // one's digits
-  ctx.fillText("1", 275, 140);
-  ctx.fillText("2", 340, 190);
-  ctx.fillText("3", 370, 275);
-  ctx.fillText("4", 340, 355);
-  ctx.fillText("5", 275, 410);
-  ctx.fillText("6", 190, 410);
-  ctx.fillText("7", 120, 355);
-  ctx.fillText("8", 90, 275);
-  ctx.fillText("9", 120, 190);
-  ctx.fillText("0", 190, 140);
+  ctx.fillText("0", 275, 140);
+  ctx.fillText("1", 340, 190);
+  ctx.fillText("2", 370, 275);
+  ctx.fillText("3", 340, 355);
+  ctx.fillText("4", 275, 410);
+  ctx.fillText("5", 190, 410);
+  ctx.fillText("6", 120, 355);
+  ctx.fillText("7", 90, 275);
+  ctx.fillText("8", 120, 190);
+  ctx.fillText("9", 190, 140);
 
   // label board rings
   ctx.globalAlpha = 0.8;
@@ -71,32 +76,45 @@ function draw() {
   ctx.stroke();
 
 
+  /**
+   * Dart Calculation/Animation
+   */
+
+
+
+
 }
 
-var mouseDown = false;
+var ignore = false;
 
 $(document).mousedown(function() {
-  mouseDown = true;
-  $('#dart').css({
-    visibility: 'visible',
-  })
-  $('body').css('cursor', 'none');
+  if(!ignore) {
+    $('#dart').css({
+      visibility: 'visible',
+    })
+    $('body').css('cursor', 'none');
+  }
 });
 
 $(document).mouseup(function() {
-  mouseDown = false;
   $('#dart').css({
     visibility: 'hidden',
   })
   $('body').css('cursor', 'default');
-
 });
 
 $(document).ready(function() {
   $(document).on('mousemove', function(e) {
     $('#dart').css({
-      left: e.pageX,
-      top: e.pageY
+      left: e.pageX-50,
+      top: e.pageY-50,
     });
   })
 });
+
+function setIgnore() {
+  ignore = true;
+}
+function setUnignore() {
+  ignore = false;
+}
