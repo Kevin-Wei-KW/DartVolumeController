@@ -63,7 +63,7 @@ function draw() {
   // ten's digits
   for(let t = 1; t <= 10; t++) {
     ctx.beginPath();
-    ctx.fillText(100 - 10*t, 250 + 14.5*t, 250 - 14.5*t);
+    ctx.fillText(100 - 10*t, 250 + 16*t, 250 - 13*t);
     ctx.stroke();
   }
   ctx.beginPath();
