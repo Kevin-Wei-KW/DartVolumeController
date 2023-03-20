@@ -86,6 +86,7 @@ let Vx = 0; // variable x-direction velocity pointed horizontally on screen
 let Vy = 0; // variable y-direction velocity pointed vertically on screen
 let dartX= 0;
 let dartY = 0;
+let dartSize = 80;
 // const Vz = 2; // z-direction velocity pointed into the screen, set at 2 m/s
                 // (1.25 s for dart to hit the board)
 
@@ -99,6 +100,7 @@ function resetState() {
     dartY = 0;
     xMax = 0;
     yMax = 0;
+    dartSize = 80;
 }
 
 function simulateFlight() {
@@ -111,20 +113,22 @@ function simulateFlight() {
         $('#dartFlight').css({
             left: dartX,
             top: dartY,
+            fontSize: dartSize,
         })
 
-        dartX += Vx * 0.1;
-        dartY += Vy * 0.1;
-        Vy = Vy + g * 0.1;
+        dartX += Vx * 0.05;
+        dartY += Vy * 0.05;
+        Vy = Vy + g * 0.05;
+
+        dartSize -= 0.5;
 
         if(!thrown) {
             clearInterval(flightInterval);
-            $('#dartFlight').css({
-                visibility: 'hidden',
-            })
+            // $('#dartFlight').css({
+            //     visibility: 'hidden',
+            // })
             
             resetState();
-
         }
     }, 10);
 }
@@ -159,6 +163,9 @@ $(document).mouseup(function() {
     })
     $('body').css('cursor', 'default');
 
+    console.log(Vx + ' ' + Vy);
+
+
     thrown = true;
     holding = false;
 
@@ -166,7 +173,7 @@ $(document).mouseup(function() {
     dartY = curY;
     simulateFlight();
 
-    window.setTimeout(() => thrown = false, 2000);
+    window.setTimeout(() => thrown = false, 1250);
 });
 
 $(document).ready(function() {
@@ -184,18 +191,22 @@ $(document).ready(function() {
         // const dX = Math.abs(e.pageX - 50 - )
         let dTime = curTime - prevTime; // delta time in milliseconds
 
-        if(holding && Math.abs(((curX - prevMouseX) / dTime) * 100) > Math.abs(Vx)) {
-            Vx = ((curX - prevMouseX) / dTime) * 100;
+        if(holding && Math.abs(((curX - prevMouseX) / (dTime/1000))) > Math.abs(Vx)) {
+            Vx = (curX - prevMouseX) / (dTime/1000);
         }
 
-        if(holding && Math.abs(((prevMouseY - curY) / dTime) * 100) > Math.abs(Vy)) {
-            Vy = ((prevMouseY - curY) / dTime) * 100;
+        if(holding && Math.abs(((curY - prevMouseY) / (dTime/1000))) > Math.abs(Vy)) {
+            Vy = (curY - prevMouseY) / (dTime/1000);
         }
+
+        // Vx = (curX - prevMouseX) / (dTime/1000);
+        // Vy = (curY - prevMouseY) / (dTime/1000);
+
 
         // xMax = Math.max(xMax, Vx);
         // yMax = Math.max(yMax, Vy);
         // console.log("Max:" + xMax + " " + yMax);
-        console.log(Vx + ' ' + Vy);
+        // console.log(Vx + ' ' + Vy);
         
         prevTime = dTime;
         prevMouseX = e.pageX-50;
