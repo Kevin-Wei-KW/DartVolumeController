@@ -80,7 +80,7 @@ function draw() {
     * Dart Calculation/Animation
     */
 
-const TIME = 1.25; // always in flight for 1.25s
+const TIME = 1250; // always in flight for 1.25s
 const g = 10; // acceleration of falling to ground
 let Vx = 0; // variable x-direction velocity pointed horizontally on screen
 let Vy = 0; // variable y-direction velocity pointed vertically on screen
@@ -90,8 +90,10 @@ let dartSize = 80;
 // const Vz = 2; // z-direction velocity pointed into the screen, set at 2 m/s
                 // (1.25 s for dart to hit the board)
 
-let xMax = 0;
+let xMax = 0; // max speed achieved during throw
 let yMax = 0;
+
+var flight; // timeout variable for flight
 
 function resetState() {
     Vx = 0;
@@ -101,6 +103,10 @@ function resetState() {
     xMax = 0;
     yMax = 0;
     dartSize = 80;
+
+    prevTime = new Date();
+
+    clearTimeout(flight);
 }
 
 function simulateFlight() {
@@ -118,9 +124,13 @@ function simulateFlight() {
 
         dartX += Vx * 0.1;
         dartY += Vy * 0.1;
-        Vy = Vy + g * 0.03;
+        Vy += g * 0.03;
 
-        dartSize -= 0.5;
+        if(xMax !== 0 || yMax !== 0) {
+            dartSize -= 0.5;
+        } else {
+            Vy += g*0.07;
+        }
 
         if(!thrown) {
             resetState();
@@ -141,7 +151,9 @@ let prevTime;
 
 // start holding dart
 $(document).mousedown(function() {
-    if(!ignore) {
+    if(!ignore && !thrown) {
+        resetState();
+
         $('#dartHand').css({
             visibility: 'visible',
         })
@@ -149,27 +161,30 @@ $(document).mousedown(function() {
 
         holding = true;
     }
-    resetState();
 });
 
 // release dart
 $(document).mouseup(function() {
-    $('#dartHand').css({
-        visibility: 'hidden',
-    })
-    $('body').css('cursor', 'default');
+    if(!thrown) {
+        $('#dartHand').css({
+            visibility: 'hidden',
+        })
+        $('body').css('cursor', 'default');
 
-    console.log(Vx + ' ' + Vy);
+        console.log(Vx + ' ' + Vy);
 
 
-    thrown = true;
-    holding = false;
+        thrown = true;
+        holding = false;
 
-    dartX = curX;
-    dartY = curY;
-    simulateFlight();
+        dartX = curX;
+        dartY = curY;
+        simulateFlight();
 
-    window.setTimeout(() => thrown = false, 1250);
+        let dropped = xMax === 0 && yMax === 0; // dart is dropped if not thrown
+
+        flight = window.setTimeout(() => thrown = false, dropped? 3000:TIME);
+    }
 });
 
 $(document).ready(function() {
@@ -182,37 +197,39 @@ $(document).ready(function() {
             top: curY,
         });
         
-        let curTime = new Date();
-        let dTime; // delta time in milliseconds
-
-        // const dX = Math.abs(e.pageX - 50 - )
-        dTime = curTime - prevTime;
-
         if(holding) {
-            if(Math.abs(((curX - prevMouseX) / (dTime))) > Math.abs(Vx)) {
-                Vx = (curX - prevMouseX) / (dTime);
-            }
-    
-            if(Math.abs(((curY - prevMouseY) / (dTime))) > Math.abs(Vy)) {
-                Vy = (curY - prevMouseY) / (dTime);
-            }
-        }
+            
+            let curTime = new Date();
+            let dTime = curTime - prevTime; // delta time in milliseconds
 
-        // Vx = (curX - prevMouseX) / (dTime/1000);
-        // Vy = (curY - prevMouseY) / (dTime/1000);
+            // const dX = Math.abs(e.pageX - 50 - )
 
-
-        // xMax = Math.max(xMax, Vx);
-        // yMax = Math.max(yMax, Vy);
-        // console.log("Max:" + xMax + " " + yMax);
-        // console.log(Vx + ' ' + Vy);
+            if(holding) {
+                if(Math.abs(((curX - prevMouseX) / (dTime))) > Math.abs(Vx)) {
+                    Vx = (curX - prevMouseX) / (dTime);
+                    xMax = Vx;
+                }
         
-        prevTime = curTime;
-        prevMouseX = e.pageX-50;
-        prevMouseY = e.pageY-50;
+                if(Math.abs(((curY - prevMouseY) / (dTime))) > Math.abs(Vy)) {
+                    Vy = (curY - prevMouseY) / (dTime);
+                    yMax = Vy;
+                }
+            }
 
-        console.log(thrown);
+            // Vx = (curX - prevMouseX) / (dTime/1000);
+            // Vy = (curY - prevMouseY) / (dTime/1000);
 
+
+            // xMax = Math.max(xMax, Vx);
+            // yMax = Math.max(yMax, Vy);
+            // console.log("Max:" + xMax + " " + yMax);
+            // console.log(Vx + ' ' + Vy);
+            
+            prevTime = curTime;
+            prevMouseX = curX;
+            prevMouseY = curY;
+
+        }
     })
 });
 
