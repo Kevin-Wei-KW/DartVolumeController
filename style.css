@@ -10,7 +10,7 @@ body {
   box-shadow: 0 0 100px gray;
 }
 
-#dart {
+.dart {
   visibility: hidden;
   background-color: transparent;
   color: transparent;
