@@ -74,8 +74,6 @@ function draw() {
     ctx.beginPath();
     ctx.fillText(100, 242, 252);
     ctx.stroke();
-
-
 }
 
 /**
@@ -84,36 +82,77 @@ function draw() {
 
 const TIME = 1.25; // always in flight for 1.25s
 const g = 10; // acceleration of falling to ground
-const Vx = 0; // variable x-direction velocity pointed horizontally on screen
-const Vy = 0; // variable y-direction velocity pointed vertically on screen
+let Vx = 0; // variable x-direction velocity pointed horizontally on screen
+let Vy = 0; // variable y-direction velocity pointed vertically on screen
+let dartX= 0;
+let dartY = 0;
 // const Vz = 2; // z-direction velocity pointed into the screen, set at 2 m/s
                 // (1.25 s for dart to hit the board)
 
-function calculateFlight() {
-    if(thrown) {
+let xMax = 0;
+let yMax = 0;
+
+function resetState() {
+    Vx = 0;
+    Vy = 0;
+    dartX = 0;
+    dartY = 0;
+    xMax = 0;
+    yMax = 0;
+}
+
+function simulateFlight() {
+
+    $('#dartFlight').css({
+        visibility: 'visible',
+    })
+
+    const flightInterval = setInterval(() => {
         $('#dartFlight').css({
-            left: $('#dartHand').css.left,
-            top: $('#dartHand').css.top,
+            left: dartX,
+            top: dartY,
         })
-    }
+
+        dartX += Vx * 0.1;
+        dartY += Vy * 0.1;
+        Vy = Vy + g * 0.1;
+
+        if(!thrown) {
+            clearInterval(flightInterval);
+            $('#dartFlight').css({
+                visibility: 'hidden',
+            })
+            
+            resetState();
+
+        }
+    }, 10);
 }
 
 var ignore = false;
 var thrown = false;
+var holding = false;
 
+let curX = -1;
+let curY = -1;
 let prevMouseX = -1;
 let prevMouseY = -1;
 let prevTime = new Date();
 
+// start holding dart
 $(document).mousedown(function() {
     if(!ignore) {
         $('#dartHand').css({
             visibility: 'visible',
         })
         $('body').css('cursor', 'none');
+
+        holding = true;
     }
+    resetState();
 });
 
+// release dart
 $(document).mouseup(function() {
     $('#dartHand').css({
         visibility: 'hidden',
@@ -121,29 +160,49 @@ $(document).mouseup(function() {
     $('body').css('cursor', 'default');
 
     thrown = true;
+    holding = false;
 
-    window.setTimeout(() => thrown = false, 1250);
+    dartX = curX;
+    dartY = curY;
+    simulateFlight();
+
+    window.setTimeout(() => thrown = false, 2000);
 });
 
 $(document).ready(function() {
     $(document).on('mousemove', function(e) {
-        const curX = e.pageX-50; // -50 to calibrate for cursor
-        const curY = e.pageY-50;
+        curX = e.pageX-50; // -50 to calibrate for cursor
+        curY = e.pageY-50;
 
         $('#dartHand').css({
             left: curX,
             top: curY,
         });
         
-        let time = new Date();
+        let curTime = new Date();
 
         // const dX = Math.abs(e.pageX - 50 - )
-        const dTime = time - prevTime; // delta time in milliseconds
+        let dTime = curTime - prevTime; // delta time in milliseconds
 
+        if(holding && Math.abs(((curX - prevMouseX) / dTime) * 100) > Math.abs(Vx)) {
+            Vx = ((curX - prevMouseX) / dTime) * 100;
+        }
+
+        if(holding && Math.abs(((prevMouseY - curY) / dTime) * 100) > Math.abs(Vy)) {
+            Vy = ((prevMouseY - curY) / dTime) * 100;
+        }
+
+        // xMax = Math.max(xMax, Vx);
+        // yMax = Math.max(yMax, Vy);
+        // console.log("Max:" + xMax + " " + yMax);
+        console.log(Vx + ' ' + Vy);
         
-
+        prevTime = dTime;
         prevMouseX = e.pageX-50;
         prevMouseY = e.pageY-50;
+
+        console.log(thrown);
+
     })
 });
 
