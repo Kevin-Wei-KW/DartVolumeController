@@ -116,19 +116,15 @@ function simulateFlight() {
             fontSize: dartSize,
         })
 
-        dartX += Vx * 0.05;
-        dartY += Vy * 0.05;
-        Vy = Vy + g * 0.05;
+        dartX += Vx * 0.1;
+        dartY += Vy * 0.1;
+        Vy = Vy + g * 0.03;
 
         dartSize -= 0.5;
 
         if(!thrown) {
-            clearInterval(flightInterval);
-            // $('#dartFlight').css({
-            //     visibility: 'hidden',
-            // })
-            
             resetState();
+            clearInterval(flightInterval);
         }
     }, 10);
 }
@@ -141,7 +137,7 @@ let curX = -1;
 let curY = -1;
 let prevMouseX = -1;
 let prevMouseY = -1;
-let prevTime = new Date();
+let prevTime;
 
 // start holding dart
 $(document).mousedown(function() {
@@ -187,16 +183,19 @@ $(document).ready(function() {
         });
         
         let curTime = new Date();
+        let dTime; // delta time in milliseconds
 
         // const dX = Math.abs(e.pageX - 50 - )
-        let dTime = curTime - prevTime; // delta time in milliseconds
+        dTime = curTime - prevTime;
 
-        if(holding && Math.abs(((curX - prevMouseX) / (dTime/1000))) > Math.abs(Vx)) {
-            Vx = (curX - prevMouseX) / (dTime/1000);
-        }
-
-        if(holding && Math.abs(((curY - prevMouseY) / (dTime/1000))) > Math.abs(Vy)) {
-            Vy = (curY - prevMouseY) / (dTime/1000);
+        if(holding) {
+            if(Math.abs(((curX - prevMouseX) / (dTime))) > Math.abs(Vx)) {
+                Vx = (curX - prevMouseX) / (dTime);
+            }
+    
+            if(Math.abs(((curY - prevMouseY) / (dTime))) > Math.abs(Vy)) {
+                Vy = (curY - prevMouseY) / (dTime);
+            }
         }
 
         // Vx = (curX - prevMouseX) / (dTime/1000);
@@ -208,7 +207,7 @@ $(document).ready(function() {
         // console.log("Max:" + xMax + " " + yMax);
         // console.log(Vx + ' ' + Vy);
         
-        prevTime = dTime;
+        prevTime = curTime;
         prevMouseX = e.pageX-50;
         prevMouseY = e.pageY-50;
 
