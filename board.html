@@ -8,31 +8,35 @@
   </head>
   <body style="background-color: black;" onload="draw()">
 
-    <main id="top">
+    <div id="box">
+      <div id="graph" style="display: inline-block">
+
+        <canvas id="canvas" width="500px" height="500px" style="background-color: black; margin-bottom: 100px"></canvas>
+        <div id="insult">
+          You got this. 
+        </div>
+        <!-- <a class="rules-btn" onmouseenter="setIgnore()" onmouseleave="setUnignore()" onclick="window.location.reload()">See Directions</a> -->
+
+      </div>
+
+    </div>
+
+    <span id="top" style="height: 300px; margin-bottom: 300px">
         <h1>Welcome to Dart-Controlled Volume Selector</h1>  
         <p>Each ring increases volume by 10, with the outermost ring having volume 0</p>
         <p>Each board section represents the one's digit</p>
         <p>Mouse Hold: Hold Dart</p>
         <p>Mouse Release: Release Dart</p>
-    </main>
 
-    <a class="start-btn" href="#box" onmouseenter="setIgnore()" onmouseleave="setUnignore()"> Start </a><br/>
+        <a class="start-btn" href="#box" onmouseenter="setIgnore()" onmouseleave="setUnignore()" onclick="startGame()"> Start </a><br/>
 
-
-    <div id="box" style="margin-top: 5rem">
-      <canvas id="canvas" width="500px" height="500px" style="background-color: black; margin: 1rem 0 3rem 0"></canvas>
-      <div id="insult">
-        You got this. 
-      </div>
-      <a class="rules-btn" href="#top" onmouseenter="setIgnore()" onmouseleave="setUnignore()">See Directions</a>
-
-
-    </div>
+    </span>
 
 
     <div class="dart" id="dartHand"><span style="font-size: 80px"> &#10060; </span></div>
     <div class="dart" id="dartFlight"><span> &#10060; </span></div>
 
+    <script src="score.js"></script>
     <script src="board.js"></script>
   </body>
 </html>

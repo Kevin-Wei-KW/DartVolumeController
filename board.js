@@ -1,3 +1,7 @@
+function startGame() {
+    $("#top").remove();
+}
+
 function draw() {
     const canvas = document.getElementById("canvas");
 
@@ -138,6 +142,7 @@ function simulateFlight() {
         }
 
         if(!thrown) {
+            calcPoints(dartX, dartY);
             resetState();
             clearInterval(flightInterval);
         }
@@ -180,8 +185,6 @@ $(document).mouseup(function() {
         })
         $('body').css('cursor', 'default');
 
-        console.log(Vx + ' ' + Vy);
-
 
         thrown = true;
         holding = false;
@@ -211,6 +214,9 @@ $(document).ready(function() {
             left: curX,
             top: curY,
         });
+
+        console.log(e.pageX + ' ' + e.pageY);
+
         
         if(holding) {
             
@@ -240,7 +246,7 @@ $(document).ready(function() {
             // xMax = Math.max(xMax, Vx);
             // yMax = Math.max(yMax, Vy);
             // console.log("Max:" + xMax + " " + yMax);
-            console.log(Vx + ' ' + Vy);
+            // console.log(Vx + ' ' + Vy);
             
             prevTime = curTime;
             prevMouseX = curX;
