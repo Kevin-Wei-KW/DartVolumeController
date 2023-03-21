@@ -80,7 +80,7 @@ function draw() {
     * Dart Calculation/Animation
     */
 
-const TIME = 1250; // always in flight for 1.25s
+const TIME = 750; // always in flight for 1.25s
 const g = 10; // acceleration of falling to ground
 let Vx = 0; // variable x-direction velocity pointed horizontally on screen
 let Vy = 0; // variable y-direction velocity pointed vertically on screen
@@ -104,6 +104,11 @@ function resetState() {
     yMax = 0;
     dartSize = 80;
 
+    ignore = false;
+    thrown = false;
+    holding = false;
+    dropped = false;
+
     prevTime = new Date();
 
     clearTimeout(flight);
@@ -122,12 +127,12 @@ function simulateFlight() {
             fontSize: dartSize,
         })
 
-        dartX += Vx * 0.1;
-        dartY += Vy * 0.1;
-        Vy += g * 0.03;
+        dartX += Vx * 0.8;
+        dartY += Vy * 0.8;
+        Vy += g * 0.02;
 
         if(xMax !== 0 || yMax !== 0) {
-            dartSize -= 0.5;
+            dartSize -= 0.8;
         } else {
             Vy += g*0.07;
         }
@@ -139,9 +144,10 @@ function simulateFlight() {
     }, 10);
 }
 
-var ignore = false;
-var thrown = false;
-var holding = false;
+var ignore = false; // whether to ignore holding (mousedown) event
+var thrown = false; // whether dart has been thrown
+var holding = false; // whether dart is being held
+var dropped = false; // whether dart was dropped instead of thrown
 
 let curX = -1;
 let curY = -1;
@@ -161,6 +167,9 @@ $(document).mousedown(function() {
 
         holding = true;
     }
+
+    console.log("Start");
+
 });
 
 // release dart
@@ -181,13 +190,16 @@ $(document).mouseup(function() {
         dartY = curY;
         simulateFlight();
 
-        let dropped = xMax === 0 && yMax === 0; // dart is dropped if not thrown
+        dropped = xMax === 0 && yMax === 0; // dart is dropped if not thrown
         if(dropped) {
             insult();
         }
 
-        flight = window.setTimeout(() => thrown = false, dropped? 2000:TIME);
+        flight = window.setTimeout(() => thrown = false, dropped? 1500:TIME);
     }
+    
+    console.log("End");
+
 });
 
 $(document).ready(function() {
@@ -207,26 +219,28 @@ $(document).ready(function() {
 
             // const dX = Math.abs(e.pageX - 50 - )
 
-            if(holding) {
-                if(Math.abs(((curX - prevMouseX) / (dTime))) > Math.abs(Vx)) {
-                    Vx = (curX - prevMouseX) / (dTime);
-                    xMax = Vx;
-                }
+            // if(holding) {
+            //     if(Math.abs(((curX - prevMouseX) / (dTime))) > Math.abs(Vx)) {
+            //         Vx = (curX - prevMouseX) / (dTime);
+            //         xMax = Vx;
+            //     }
         
-                if(Math.abs(((curY - prevMouseY) / (dTime))) > Math.abs(Vy)) {
-                    Vy = (curY - prevMouseY) / (dTime);
-                    yMax = Vy;
-                }
-            }
+            //     if(Math.abs(((curY - prevMouseY) / (dTime))) > Math.abs(Vy)) {
+            //         Vy = (curY - prevMouseY) / (dTime);
+            //         yMax = Vy;
+            //     }
+            // }
 
-            // Vx = (curX - prevMouseX) / (dTime/1000);
-            // Vy = (curY - prevMouseY) / (dTime/1000);
+            Vx = (curX - prevMouseX) / (dTime);
+            Vy = (curY - prevMouseY) / (dTime);
+            xMax = Math.max(xMax, Vx);
+            yMax = Math.max(yMax, Vy);
 
 
             // xMax = Math.max(xMax, Vx);
             // yMax = Math.max(yMax, Vy);
             // console.log("Max:" + xMax + " " + yMax);
-            // console.log(Vx + ' ' + Vy);
+            console.log(Vx + ' ' + Vy);
             
             prevTime = curTime;
             prevMouseX = curX;
