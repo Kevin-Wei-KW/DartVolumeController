@@ -182,8 +182,11 @@ $(document).mouseup(function() {
         simulateFlight();
 
         let dropped = xMax === 0 && yMax === 0; // dart is dropped if not thrown
+        if(dropped) {
+            insult();
+        }
 
-        flight = window.setTimeout(() => thrown = false, dropped? 3000:TIME);
+        flight = window.setTimeout(() => thrown = false, dropped? 2000:TIME);
     }
 });
 
@@ -238,4 +241,12 @@ function setIgnore() {
 }
 function setUnignore() {
     ignore = false;
+}
+
+function insult() {
+    let insults = ['Really?', 'Wow', 'Why are you doing this to yourself'];
+
+    let pick = Math.floor(Math.random() * 3);
+
+    $('#insult').html(insults[pick]);
 }

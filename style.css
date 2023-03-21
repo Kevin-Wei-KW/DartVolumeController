@@ -3,6 +3,9 @@ body {
   color: white;
   text-align: center;
   overflow: hidden;
+
+  user-select: none;
+
 }
 
 #canvas {
@@ -33,6 +36,13 @@ body {
 
 .start-btn {
   color: white;
-  background-color: black;
   margin: 20px;
+  padding: 10px;
+  font-weight: 600;
+}
+
+.rules-btn {
+  color: white;
+  margin: 50px;
+  opacity: 50%;
 }
