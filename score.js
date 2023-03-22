@@ -12,6 +12,7 @@ var centerY = graphOffsets.top + (graphOffsets.height/2);
 var dSize = 20;
 
 function calcPoints(x, y) {
+    let finalValue = 0;
     // console.log('top-left: ' + graphOffsets.left + ' ' + (graphOffsets.top));
     // console.log('bot-left: ' + graphOffsets.left + ' ' + (graphOffsets.top + graphOffsets.height));
     // console.log('center: ' + (graphOffsets.left + (graphOffsets.width/2)) + ' ' + (graphOffsets.top + (graphOffsets.height/2)));
@@ -27,13 +28,46 @@ function calcPoints(x, y) {
 
     const tens = 100 - (Math.floor(R / 20) * 10);
 
+    const cartX = centerY - calibY; // simulate cartesian plane, with Q1 in sections 0, 1, cw
+    const cartY = calibX - centerX;
+
+    let angle = Math.atan(cartY/cartX); // reference angle
+    const SECTION_ANGLE = Math.PI / 5; // 2pi circle, 10 sections, pi/5 radian per section
+
+    // Q2
+    if (cartX <= 0 && cartY >= 0) {
+        angle += Math.PI;
+
+    // Q3
+    } else if (cartX <= 0 && cartY <= 0) {
+        angle += Math.PI;
+
+    // Q4
+    } else if (cartX >= 0 && cartY <= 0) {
+        angle += 2*Math.PI;
+    }
+
+    const section = Math.floor(angle / SECTION_ANGLE); // determines section 0-9
+
+    const ones = section;
+
+    finalValue = tens + ones;
+
     // display volume bar accordingly
-    $("#pct").html(`${tens}%`)
+    $("#pct").html(`${finalValue}%`)
     $(".fill").css({
-        width: `${tens}%`
+        width: `${finalValue}%`
     })
 
-    console.log("POINTS: " + tens);
+
+    console.log("cartX: " + cartX);
+    console.log("cartY: " + cartY);
+    console.log("angle: " + (angle * (180/Math.PI)));
+
+    console.log("tens: " + tens);
+    console.log("ones: " + ones);
+
+    console.log("POINTS: " + finalValue);
     console.log("RADIUS: " + R);
     console.log("X: " + cX);
     console.log("Y: " + cY);
