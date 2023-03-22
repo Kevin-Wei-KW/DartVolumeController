@@ -45,6 +45,24 @@ body {
   opacity: 50%;
 }
 
+#volume {
+  height: 20px;
+  width: 300px;
+  margin: 10px auto 30px auto;
+}
+.bar {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(50,50,50);
+  border: 2px solid white;
+}
+.fill {
+    background-color: white;
+    height: 100%;
+    width: 0%;
+    z-index: 2;
+}
+
 .rectangle{
   width:40px;
   height:40px;

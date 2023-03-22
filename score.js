@@ -12,9 +12,9 @@ var centerY = graphOffsets.top + (graphOffsets.height/2);
 var dSize = 20;
 
 function calcPoints(x, y) {
-    console.log('top-left: ' + graphOffsets.left + ' ' + (graphOffsets.top));
-    console.log('bot-left: ' + graphOffsets.left + ' ' + (graphOffsets.top + graphOffsets.height));
-    console.log('center: ' + (graphOffsets.left + (graphOffsets.width/2)) + ' ' + (graphOffsets.top + (graphOffsets.height/2)));
+    // console.log('top-left: ' + graphOffsets.left + ' ' + (graphOffsets.top));
+    // console.log('bot-left: ' + graphOffsets.left + ' ' + (graphOffsets.top + graphOffsets.height));
+    // console.log('center: ' + (graphOffsets.left + (graphOffsets.width/2)) + ' ' + (graphOffsets.top + (graphOffsets.height/2)));
     console.log('hit: ' + (x+25) + ' ' + (y+10));
 
     const calibX = x + 25; // calibrated coordinates
@@ -27,6 +27,12 @@ function calcPoints(x, y) {
 
     const tens = 100 - (Math.floor(R / 20) * 10);
 
+    // display volume bar accordingly
+    $("#pct").html(`${tens}%`)
+    $(".fill").css({
+        width: `${tens}%`
+    })
+
     console.log("POINTS: " + tens);
     console.log("RADIUS: " + R);
     console.log("X: " + cX);
@@ -35,17 +41,17 @@ function calcPoints(x, y) {
     
 
 
-    for(var i = 1; i < 10; i++) {
-        // TBD TEST
-        $(`#rectangle${i}`).css({
-            left: centerX - dSize,
-            top: centerY - dSize,
-            width: dSize*2,
-            height: dSize*2,
-        })
-        // ctx.beginPath();
-        // ctx.arc(centerX, centerY, dSize, 0, Math.PI*2, true);
-        // ctx.stroke();
-        dSize += 20;
-    }
+    // for(var i = 1; i < 10; i++) {
+    //     // TBD TEST
+    //     $(`#rectangle${i}`).css({
+    //         left: centerX - dSize,
+    //         top: centerY - dSize,
+    //         width: dSize*2,
+    //         height: dSize*2,
+    //     })
+    //     // ctx.beginPath();
+    //     // ctx.arc(centerX, centerY, dSize, 0, Math.PI*2, true);
+    //     // ctx.stroke();
+    //     dSize += 20;
+    // }
 }
