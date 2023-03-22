@@ -2,6 +2,8 @@ function startGame() {
     $("#top").remove();
 }
 
+window.onresize = function(){ location.reload(); }
+
 // TBD: delete when finished
 var graphOffsets = document.getElementById("canvas").getBoundingClientRect();
 var boxOffsets = document.getElementById("box").getBoundingClientRect();
