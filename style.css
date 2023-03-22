@@ -2,9 +2,9 @@ body {
   background-color: black;
   color: white;
   text-align: center;
-  overflow: hidden;
 
-  user-select: none;
+  /* overflow: hidden;
+  user-select: none; */
 
 }
 
@@ -29,8 +29,6 @@ body {
   user-select: none;
 
   position: absolute;
-  left: -25px;
-  top: -25px;
   z-index: 1;
 }
 
@@ -45,4 +43,13 @@ body {
   color: white;
   margin: 50px;
   opacity: 50%;
+}
+
+.rectangle{
+  width:40px;
+  height:40px;
+  border-radius: 50%;
+  background-color: transparent;
+  z-index: 10;
+  border: 2px solid red;
 }

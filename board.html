@@ -6,15 +6,27 @@
     <link rel="stylesheet" href="./style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   </head>
-  <body style="background-color: black;" onload="draw()">
+  <body onload="draw()">
 
     <div id="box">
       <div id="graph" style="display: inline-block">
 
         <canvas id="canvas" width="500px" height="500px" style="background-color: black; margin-bottom: 100px"></canvas>
+
+        <div id="rectangle1" class="rectangle" style="position: absolute"></div>
+        <div id="rectangle2" class="rectangle" style="position: absolute"></div>
+        <div id="rectangle3" class="rectangle" style="position: absolute"></div>
+        <div id="rectangle4" class="rectangle" style="position: absolute"></div>
+        <div id="rectangle5" class="rectangle" style="position: absolute"></div>
+        <div id="rectangle6" class="rectangle" style="position: absolute"></div>
+        <div id="rectangle7" class="rectangle" style="position: absolute"></div>
+        <div id="rectangle8" class="rectangle" style="position: absolute"></div>
+        <div id="rectangle9" class="rectangle" style="position: absolute"></div>
+
         <div id="insult">
           You got this. 
         </div>
+
         <!-- <a class="rules-btn" onmouseenter="setIgnore()" onmouseleave="setUnignore()" onclick="window.location.reload()">See Directions</a> -->
 
       </div>
@@ -33,9 +45,10 @@
     </span>
 
 
-    <div class="dart" id="dartHand"><span style="font-size: 80px"> &#10060; </span></div>
-    <div class="dart" id="dartFlight"><span> &#10060; </span></div>
+    <div class="dart" id="dartHand"><span id="dart" style="font-size: 80px"> &#10060; </span></div>
+    <div class="dart" id="dartFlight"><span id="dart"> &#10060; </span></div>
 
+    <!-- DELETE TEST-->
     <script src="score.js"></script>
     <script src="board.js"></script>
   </body>

@@ -2,12 +2,21 @@ function startGame() {
     $("#top").remove();
 }
 
+// TBD: delete when finished
+var graphOffsets = document.getElementById("canvas").getBoundingClientRect();
+var boxOffsets = document.getElementById("box").getBoundingClientRect();
+
+var centerX = graphOffsets.left + (graphOffsets.width/2);
+var centerY = graphOffsets.top + (graphOffsets.height/2);
+
+var dSize = 20;
+var index = 1;
+
 function draw() {
     const canvas = document.getElementById("canvas");
 
     const ctx = canvas.getContext("2d");
     ctx.strokeStyle = "#FFFFFF"
-
 
     /**
      * Board Creation
@@ -20,6 +29,7 @@ function draw() {
         ctx.beginPath();
         ctx.arc(250, 250, r, 0, Math.PI * 2, true);
         ctx.stroke(); 
+
     }
 
     let dX = 0;
@@ -207,8 +217,8 @@ $(document).mouseup(function() {
 
 $(document).ready(function() {
     $(document).on('mousemove', function(e) {
-        curX = e.pageX-50; // -50 to calibrate for cursor
-        curY = e.pageY-50;
+        curX = e.pageX-55; // minus to calibrate for cursor
+        curY = e.pageY-60;
 
         $('#dartHand').css({
             left: curX,
