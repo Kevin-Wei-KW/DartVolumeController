@@ -53,6 +53,12 @@ function calcPoints(x, y) {
 
     finalValue = tens + ones;
 
+    if(finalValue > 100) {
+        finalValue = 100;
+    } else if (finalValue < 0) {
+        finalValue = 0;
+    }
+
     // display volume bar accordingly
     $("#pct").html(`${finalValue}%`)
     $(".fill").css({
