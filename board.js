@@ -143,8 +143,8 @@ function simulateFlight() {
             fontSize: dartSize,
         })
 
-        // dartX += Vx * 0.8;
-        // dartY += Vy * 0.8;
+        dartX += Vx * 0.8;
+        dartY += Vy * 0.8;
         Vy += g * 0.02;
 
         if(xMax !== 0 || yMax !== 0) {
@@ -187,7 +187,7 @@ $(document).mousedown(function() {
         holding = true;
     }
 
-    console.log("Start");
+    // console.log("Start");
 
 });
 
@@ -215,7 +215,7 @@ $(document).mouseup(function() {
         flight = window.setTimeout(() => thrown = false, dropped? 1500:TIME);
     }
     
-    console.log("End");
+    // console.log("End");
 
 });
 
@@ -229,7 +229,7 @@ $(document).ready(function() {
             top: curY,
         });
 
-        console.log(e.pageX + ' ' + e.pageY);
+        // console.log(e.pageX + ' ' + e.pageY);
 
         
         if(holding) {

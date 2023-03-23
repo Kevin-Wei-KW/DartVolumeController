@@ -16,10 +16,10 @@ function calcPoints(x, y) {
     // console.log('top-left: ' + graphOffsets.left + ' ' + (graphOffsets.top));
     // console.log('bot-left: ' + graphOffsets.left + ' ' + (graphOffsets.top + graphOffsets.height));
     // console.log('center: ' + (graphOffsets.left + (graphOffsets.width/2)) + ' ' + (graphOffsets.top + (graphOffsets.height/2)));
-    console.log('hit: ' + (x+25) + ' ' + (y+10));
+    // console.log('hit: ' + (x+25) + ' ' + (y+10));
 
     const calibX = x + 25; // calibrated coordinates
-    const calibY = y + 13;
+    const calibY = y + 12.5;
 
     const cX = Math.abs(calibX - centerX); // distance between dart and center
     const cY = Math.abs(calibY - centerY);
@@ -59,20 +59,20 @@ function calcPoints(x, y) {
         width: `${finalValue}%`
     })
 
-    console.log("centerX: " + centerX);
-    console.log("centerY: " + centerY);
+    // console.log("centerX: " + centerX);
+    // console.log("centerY: " + centerY);
 
-    console.log("cartX: " + cartX);
-    console.log("cartY: " + cartY);
-    console.log("angle: " + (angle * (180/Math.PI)));
+    // console.log("cartX: " + cartX);
+    // console.log("cartY: " + cartY);
+    // console.log("angle: " + (angle * (180/Math.PI)));
 
-    console.log("tens: " + tens);
-    console.log("ones: " + ones);
+    // console.log("tens: " + tens);
+    // console.log("ones: " + ones);
 
-    console.log("POINTS: " + finalValue);
-    console.log("RADIUS: " + R);
-    console.log("X: " + cX);
-    console.log("Y: " + cY);
+    // console.log("POINTS: " + finalValue);
+    // console.log("RADIUS: " + R);
+    // console.log("X: " + cX);
+    // console.log("Y: " + cY);
     
     
 
