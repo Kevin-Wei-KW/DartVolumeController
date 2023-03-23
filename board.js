@@ -143,12 +143,14 @@ function simulateFlight() {
             fontSize: dartSize,
         })
 
-        dartX += Vx * 0.8;
-        dartY += Vy * 0.8;
+        // dartX += Vx * 0.8;
+        // dartY += Vy * 0.8;
         Vy += g * 0.02;
 
         if(xMax !== 0 || yMax !== 0) {
             dartSize -= 0.8;
+            dartX += 0.4;
+            dartY += 0.6;
         } else {
             Vy += g*0.07;
         }

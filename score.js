@@ -19,7 +19,7 @@ function calcPoints(x, y) {
     console.log('hit: ' + (x+25) + ' ' + (y+10));
 
     const calibX = x + 25; // calibrated coordinates
-    const calibY = y + 10;
+    const calibY = y + 13;
 
     const cX = Math.abs(calibX - centerX); // distance between dart and center
     const cY = Math.abs(calibY - centerY);
@@ -59,6 +59,8 @@ function calcPoints(x, y) {
         width: `${finalValue}%`
     })
 
+    console.log("centerX: " + centerX);
+    console.log("centerY: " + centerY);
 
     console.log("cartX: " + cartX);
     console.log("cartY: " + cartY);
