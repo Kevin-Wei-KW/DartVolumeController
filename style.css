@@ -9,14 +9,17 @@ body {
 }
 
 #top {
-    position: absolute;
-    left: 26%;
+    position: fixed;
+    left: 0;
     top: 0;
-    height: 700px;
+    height: 100%;
+    width: 100%;
     z-index: 100;
     background-color: black;
     box-shadow: 0 0 20px gray;
     padding: auto;
+    margin-right: auto;
+    border-radius: 0 0 20% 20%;
 }
 
 #canvas {
