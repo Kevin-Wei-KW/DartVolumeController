@@ -175,7 +175,22 @@ let prevMouseY = -1;
 let prevTime;
 
 // start holding dart
-$(document).mousedown(function() {
+// $(document).mousedown(function() {
+//     if(!ignore && !thrown) {
+//         resetState();
+
+//         $('#dartHand').css({
+//             visibility: 'visible',
+//         })
+//         $('body').css('cursor', 'none');
+
+//         holding = true;
+//     }
+
+//     // console.log("Start");
+
+// });
+$(document).bind('touchstart mousedown', function() {
     if(!ignore && !thrown) {
         resetState();
 
@@ -191,8 +206,36 @@ $(document).mousedown(function() {
 
 });
 
+
+
 // release dart
-$(document).mouseup(function() {
+// $(document).mouseup(function() {
+//     if(!thrown) {
+//         $('#dartHand').css({
+//             visibility: 'hidden',
+//         })
+//         $('body').css('cursor', 'default');
+
+
+//         thrown = true;
+//         holding = false;
+
+//         dartX = curX;
+//         dartY = curY;
+//         simulateFlight();
+
+//         dropped = xMax === 0 && yMax === 0; // dart is dropped if not thrown
+//         if(dropped) {
+//             insult();
+//         }
+
+//         flight = window.setTimeout(() => thrown = false, dropped? 1500:TIME);
+//     }
+    
+//     // console.log("End");
+
+// });
+$(document).bind('touchend mouseup', function() {
     if(!thrown) {
         $('#dartHand').css({
             visibility: 'hidden',
