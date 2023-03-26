@@ -164,7 +164,7 @@ function simulateFlight() {
         Vy += g * 0.01;
 
         if(xMax !== 0 || yMax !== 0) {
-            dartSize -= 0.8;
+            dartSize -= 0.7;
             dartX += 0.4;
             dartY += 0.6;
         } else {
