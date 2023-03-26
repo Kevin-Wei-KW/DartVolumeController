@@ -267,51 +267,62 @@ $(document).ready(function() {
         curX = e.pageX-55; // minus to calibrate for cursor
         curY = e.pageY-60;
 
-        $('#dartHand').css({
-            left: curX,
-            top: curY,
-        });
+        handleMove();
+    })
+    $(document).on('touchmove', function(e) {
+        e.preventDefault();
+        curX = e.touches[0].clientX;
+        curY = e.touches[0].clientY;
 
-        // console.log(e.pageX + ' ' + e.pageY);
-
-        
-        if(holding) {
-            
-            let curTime = new Date();
-            let dTime = curTime - prevTime; // delta time in milliseconds
-
-            // const dX = Math.abs(e.pageX - 50 - )
-
-            // if(holding) {
-            //     if(Math.abs(((curX - prevMouseX) / (dTime))) > Math.abs(Vx)) {
-            //         Vx = (curX - prevMouseX) / (dTime);
-            //         xMax = Vx;
-            //     }
-        
-            //     if(Math.abs(((curY - prevMouseY) / (dTime))) > Math.abs(Vy)) {
-            //         Vy = (curY - prevMouseY) / (dTime);
-            //         yMax = Vy;
-            //     }
-            // }
-
-            Vx = (curX - prevMouseX) / (dTime);
-            Vy = (curY - prevMouseY) / (dTime);
-            xMax = Math.max(xMax, Vx);
-            yMax = Math.max(yMax, Vy);
-
-
-            // xMax = Math.max(xMax, Vx);
-            // yMax = Math.max(yMax, Vy);
-            // console.log("Max:" + xMax + " " + yMax);
-            // console.log(Vx + ' ' + Vy);
-            
-            prevTime = curTime;
-            prevMouseX = curX;
-            prevMouseY = curY;
-
-        }
+        handleMove();
     })
 });
+
+function handleMove() {
+    $('#dartHand').css({
+        left: curX,
+        top: curY,
+    });
+
+    // console.log(e.pageX + ' ' + e.pageY);
+
+    
+    if(holding) {
+        
+        let curTime = new Date();
+        let dTime = curTime - prevTime; // delta time in milliseconds
+
+        // const dX = Math.abs(e.pageX - 50 - )
+
+        // if(holding) {
+        //     if(Math.abs(((curX - prevMouseX) / (dTime))) > Math.abs(Vx)) {
+        //         Vx = (curX - prevMouseX) / (dTime);
+        //         xMax = Vx;
+        //     }
+    
+        //     if(Math.abs(((curY - prevMouseY) / (dTime))) > Math.abs(Vy)) {
+        //         Vy = (curY - prevMouseY) / (dTime);
+        //         yMax = Vy;
+        //     }
+        // }
+
+        Vx = (curX - prevMouseX) / (dTime);
+        Vy = (curY - prevMouseY) / (dTime);
+        xMax = Math.max(xMax, Vx);
+        yMax = Math.max(yMax, Vy);
+
+
+        // xMax = Math.max(xMax, Vx);
+        // yMax = Math.max(yMax, Vy);
+        // console.log("Max:" + xMax + " " + yMax);
+        // console.log(Vx + ' ' + Vy);
+        
+        prevTime = curTime;
+        prevMouseX = curX;
+        prevMouseY = curY;
+
+    }
+}
 
 function setIgnore() {
     ignore = true;
