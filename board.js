@@ -214,7 +214,7 @@ $(document).bind('touchstart mousedown', function(e) {
 // release dart
 $(document).bind('touchend mouseup', function(e) {
 
-    if(!thrown) {
+    if(!thrown && !ignore) {
         $('#dartHand').css({
             visibility: 'hidden',
         })
