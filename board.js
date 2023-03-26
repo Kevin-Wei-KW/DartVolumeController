@@ -143,6 +143,22 @@ function simulateFlight() {
             fontSize: dartSize,
         })
 
+        // limit max speed
+        if(Vx > 0) {
+            Vx = Math.min(Vx, 5);
+        } else {
+            Vx = Math.max(Vx, -5);
+        }
+
+        if(Vy > 0) {
+            Vy = Math.min(Vy, 5);
+        } else {
+            Vy = Math.max(Vy, -5);
+        }
+
+        // console.log('X' + ''+ Vx);
+        // console.log('Y' + '' + Vy);
+
         dartX += Vx * 0.8;
         dartY += Vy * 0.8;
         Vy += g * 0.01;
