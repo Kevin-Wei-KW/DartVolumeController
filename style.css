@@ -46,6 +46,7 @@ body {
 
   position: absolute;
   z-index: 1;
+  -webkit-transform: translateZ(0)
 }
 
 .start-btn {
