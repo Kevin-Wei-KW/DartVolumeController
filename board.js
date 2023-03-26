@@ -150,9 +150,9 @@ function simulateFlight() {
             Vx = Math.max(Vx, -5);
         }
 
-        if(Vy > 0) {
+        if(Vy > 0 && !dropped) {
             Vy = Math.min(Vy, 5);
-        } else {
+        } else if(!dropped) {
             Vy = Math.max(Vy, -5);
         }
 
@@ -228,7 +228,7 @@ $(document).bind('touchend mouseup', function(e) {
         dartY = curY;
         simulateFlight();
 
-        dropped = xMax === 0 && yMax === 0; // dart is dropped if not thrown
+        dropped = Vx === 0 && Vy === 0; // dart is dropped if not thrown
         if(dropped) {
             insult();
         }
