@@ -145,7 +145,7 @@ function simulateFlight() {
 
         dartX += Vx * 0.8;
         dartY += Vy * 0.8;
-        Vy += g * 0.02;
+        Vy += g * 0.01;
 
         if(xMax !== 0 || yMax !== 0) {
             dartSize -= 0.8;
@@ -175,22 +175,8 @@ let prevMouseY = -1;
 let prevTime;
 
 // start holding dart
-// $(document).mousedown(function() {
-//     if(!ignore && !thrown) {
-//         resetState();
+$(document).bind('touchstart mousedown', function(e) {
 
-//         $('#dartHand').css({
-//             visibility: 'visible',
-//         })
-//         $('body').css('cursor', 'none');
-
-//         holding = true;
-//     }
-
-//     // console.log("Start");
-
-// });
-$(document).bind('touchstart mousedown', function() {
     if(!ignore && !thrown) {
         resetState();
 
@@ -209,33 +195,7 @@ $(document).bind('touchstart mousedown', function() {
 
 
 // release dart
-// $(document).mouseup(function() {
-//     if(!thrown) {
-//         $('#dartHand').css({
-//             visibility: 'hidden',
-//         })
-//         $('body').css('cursor', 'default');
-
-
-//         thrown = true;
-//         holding = false;
-
-//         dartX = curX;
-//         dartY = curY;
-//         simulateFlight();
-
-//         dropped = xMax === 0 && yMax === 0; // dart is dropped if not thrown
-//         if(dropped) {
-//             insult();
-//         }
-
-//         flight = window.setTimeout(() => thrown = false, dropped? 1500:TIME);
-//     }
-    
-//     // console.log("End");
-
-// });
-$(document).bind('touchend mouseup', function() {
+$(document).bind('touchend mouseup', function(e) {
     if(!thrown) {
         $('#dartHand').css({
             visibility: 'hidden',
@@ -262,17 +222,23 @@ $(document).bind('touchend mouseup', function() {
 
 });
 
+const OFFSET_X = 55;
+const OFFSET_Y = 60;
+
 $(document).ready(function() {
     $(document).on('mousemove', function(e) {
-        curX = e.pageX-55; // minus to calibrate for cursor
-        curY = e.pageY-60;
+        curX = e.pageX - OFFSET_X; // minus to calibrate for cursor
+        curY = e.pageY - OFFSET_Y;
 
         handleMove();
     })
     $(document).on('touchmove', function(e) {
         e.preventDefault();
-        curX = e.touches[0].clientX;
-        curY = e.touches[0].clientY;
+
+        var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+
+        curX = touch.pageX - OFFSET_X;
+        curY = touch.pageY - OFFSET_Y;
 
         handleMove();
     })
