@@ -176,6 +176,7 @@ let prevTime;
 
 // start holding dart
 $(document).bind('touchstart mousedown', function(e) {
+    e.preventDefault();
 
     if(!ignore && !thrown) {
         resetState();
@@ -196,6 +197,7 @@ $(document).bind('touchstart mousedown', function(e) {
 
 // release dart
 $(document).bind('touchend mouseup', function(e) {
+
     if(!thrown) {
         $('#dartHand').css({
             visibility: 'hidden',
